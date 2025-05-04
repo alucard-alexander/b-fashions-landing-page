@@ -1,6 +1,13 @@
 
 import React, { useEffect, useRef } from 'react';
 
+declare global {
+  interface Window {
+    initMap: () => void;
+    google: any;
+  }
+}
+
 // This component uses the Google Maps JavaScript API
 const GoogleMap: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -18,7 +25,7 @@ const GoogleMap: React.FC = () => {
     // Define the global callback function
     window.initMap = () => {
       // Create map centered on a location (this is Delhi, India)
-      const map = new google.maps.Map(mapRef.current as HTMLElement, {
+      const map = new window.google.maps.Map(mapRef.current as HTMLElement, {
         center: { lat: 28.6139, lng: 77.2090 },
         zoom: 14,
         styles: [
@@ -36,7 +43,7 @@ const GoogleMap: React.FC = () => {
       });
 
       // Add a marker
-      new google.maps.Marker({
+      new window.google.maps.Marker({
         position: { lat: 28.6139, lng: 77.2090 },
         map,
         title: "सारीKurta Headquarters",
@@ -63,12 +70,5 @@ const GoogleMap: React.FC = () => {
     </div>
   );
 };
-
-// Add the missing global type
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
 
 export default GoogleMap;
