@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutGrid, Users, MapPin, Star, BookOpen } from 'lucide-react';
+import { LayoutGrid, Users, MapPin, Star } from 'lucide-react';
 
 const Navigation = () => {
   return (
