@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Mail } from 'lucide-react';
+import { Timer } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const HeroBanner = () => {
   return (
@@ -21,23 +22,27 @@ const HeroBanner = () => {
           Elegant Sarees & Kurtas - Coming Soon
         </p>
         
-        <div className="bg-white shadow-lg rounded-xl p-6 max-w-md mx-auto">
-          <p className="text-gray-600 mb-4">
-            Be the first to know when we launch
+        <div className="bg-white shadow-lg rounded-xl p-8 max-w-md mx-auto">
+          <div className="flex items-center justify-center mb-4">
+            <Timer className="w-6 h-6 mr-2 text-[#530c2c]" />
+            <h2 className="text-xl font-semibold text-[#530c2c]">Coming Soon</h2>
+          </div>
+          
+          <p className="text-gray-600 mb-6">
+            Our online shopping experience is being crafted with care and will be available soon. 
+            We're excited to bring you the finest collection of traditional Indian wear.
           </p>
           
-          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="flex-grow px-4 py-2 focus:outline-none"
-            />
-            <button 
-              className="bg-[#530c2c] text-white px-4 py-2 hover:bg-[#c6576f] transition-colors"
-            >
-              <Mail size={20} />
-            </button>
-          </div>
+          <Button 
+            className="w-full bg-gradient-to-r from-[#530c2c] to-[#c6576f] hover:from-[#3b081f] hover:to-[#a8485d] text-white py-3"
+            disabled
+          >
+            Online Shopping Coming Soon
+          </Button>
+          
+          <p className="mt-4 text-sm text-gray-500">
+            Follow us on social media for updates
+          </p>
         </div>
         
         <div className="mt-12 text-sm text-gray-500">
