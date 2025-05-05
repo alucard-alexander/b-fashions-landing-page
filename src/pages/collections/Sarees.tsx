@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -104,6 +104,15 @@ const sareeProducts = [
 
 const Sarees = () => {
   const isMobile = useIsMobile();
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+
+  const handleFilterClick = (filter: string) => {
+    setActiveFilter(filter);
+  };
+
+  const filteredProducts = activeFilter === 'All' 
+    ? sareeProducts 
+    : sareeProducts.filter(product => product.tags.includes(activeFilter));
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdf1f4] to-[#f8e6ea]">
@@ -181,56 +190,99 @@ const Sarees = () => {
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap gap-4 justify-center mb-8">
-          <Button variant="outline" className="rounded-full">All Sarees</Button>
-          <Button variant="outline" className="rounded-full">Wedding</Button>
-          <Button variant="outline" className="rounded-full">Casual</Button>
-          <Button variant="outline" className="rounded-full">Party Wear</Button>
-          <Button variant="outline" className="rounded-full">Handloom</Button>
+          <Button 
+            variant={activeFilter === 'All' ? "default" : "outline"} 
+            className={`rounded-full ${activeFilter === 'All' ? 'bg-[#530c2c]' : ''}`}
+            onClick={() => handleFilterClick('All')}
+          >
+            All Sarees
+          </Button>
+          <Button 
+            variant={activeFilter === 'Wedding' ? "default" : "outline"} 
+            className={`rounded-full ${activeFilter === 'Wedding' ? 'bg-[#530c2c]' : ''}`}
+            onClick={() => handleFilterClick('Wedding')}
+          >
+            Wedding
+          </Button>
+          <Button 
+            variant={activeFilter === 'Casual' ? "default" : "outline"} 
+            className={`rounded-full ${activeFilter === 'Casual' ? 'bg-[#530c2c]' : ''}`}
+            onClick={() => handleFilterClick('Casual')}
+          >
+            Casual
+          </Button>
+          <Button 
+            variant={activeFilter === 'Party Wear' ? "default" : "outline"} 
+            className={`rounded-full ${activeFilter === 'Party Wear' ? 'bg-[#530c2c]' : ''}`}
+            onClick={() => handleFilterClick('Party Wear')}
+          >
+            Party Wear
+          </Button>
+          <Button 
+            variant={activeFilter === 'Handloom' ? "default" : "outline"} 
+            className={`rounded-full ${activeFilter === 'Handloom' ? 'bg-[#530c2c]' : ''}`}
+            onClick={() => handleFilterClick('Handloom')}
+          >
+            Handloom
+          </Button>
         </div>
         
         {/* Saree Products Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {sareeProducts.map((saree) => (
-            <Card key={saree.id} className="relative group overflow-hidden">
-              <Badge className="absolute top-2 right-2 bg-[#530c2c] z-10">
-                {saree.discount}
-              </Badge>
-              <div className="absolute top-2 left-2 z-10">
-                <Button size="icon" variant="ghost" className="rounded-full bg-white/80 hover:bg-white">
-                  <Heart className="size-4" />
-                </Button>
-              </div>
-              <div className="h-60 sm:h-72 bg-[#f8e6ea] relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-xl text-[#530c2c]/70">Product Image</p>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent h-24 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-lg">{saree.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4 line-clamp-2">{saree.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {saree.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="bg-[#f8e6ea] text-[#530c2c]">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="text-xl font-bold">₹{saree.price.toLocaleString()}</p>
-                    <p className="text-sm text-gray-500 line-through">₹{saree.originalPrice.toLocaleString()}</p>
-                  </div>
-                  <Button size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ShoppingCart className="mr-2" size={16} />
-                    Add to Cart
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((saree) => (
+              <Card key={saree.id} className="relative group overflow-hidden">
+                <Badge className="absolute top-2 right-2 bg-[#530c2c] z-10">
+                  {saree.discount}
+                </Badge>
+                <div className="absolute top-2 left-2 z-10">
+                  <Button size="icon" variant="ghost" className="rounded-full bg-white/80 hover:bg-white">
+                    <Heart className="size-4" />
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+                <div className="h-60 sm:h-72 bg-[#f8e6ea] relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="text-xl text-[#530c2c]/70">Product Image</p>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/40 to-transparent h-24 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-lg">{saree.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">{saree.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {saree.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary" className="bg-[#f8e6ea] text-[#530c2c]">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xl font-bold">₹{saree.price.toLocaleString()}</p>
+                      <p className="text-sm text-gray-500 line-through">₹{saree.originalPrice.toLocaleString()}</p>
+                    </div>
+                    <Button size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ShoppingCart className="mr-2" size={16} />
+                      Add to Cart
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-16">
+              <p className="text-lg text-gray-600">No products found matching the selected filter.</p>
+              <Button 
+                variant="outline" 
+                className="mt-4" 
+                onClick={() => handleFilterClick('All')}
+              >
+                View All Sarees
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <Footer />
