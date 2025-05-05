@@ -14,8 +14,8 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fdf1f4] to-[#f8e6ea]">
       <Navigation />
       <div className="flex-grow">
-        <CategorySection />
         <FeaturedCollections />
+        <CategorySection />
         <CollectionTypes />
         <CustomerReviews />
         <QualityPromise />
